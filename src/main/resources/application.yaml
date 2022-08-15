@@ -1,0 +1,4 @@
+pod:
+  message: ${MESSAGE}
+  version: ${POD_VERSION}
+  name: ${POD_NAME}
