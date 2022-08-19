@@ -1,4 +1,4 @@
 pod:
   message: ${MESSAGE}
-  version: ${POD_VERSION}
+  version: ${POD_VERSION:v3}
   name: ${POD_NAME}
