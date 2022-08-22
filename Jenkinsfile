@@ -2,7 +2,7 @@ node {
 
     def pod
 
-    def version = "v1"
+    def version = "v3"
 
     stage('notification') {
         withCredentials([string(credentialsId: 'botToken', variable: 'TOKEN'), string(credentialsId: 'chatId', variable: 'CHAT_ID')]) {
