@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pod
+spec:
+  replicas: 3
+  template:
+    metadata:
+      name: pod
+      labels:
+        app: pod
+    spec:
+      containers:
+        - image: jarrettoswald/pod
+          imagePullPolicy: Always
+          name: pod
+          env:
+            - name: POD_VERSION
+              value: "v1\n"
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              scheme: HTTP
+              path: /pod
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          envFrom:
+            - configMapRef:
+                name: pod
+  selector:
+    matchLabels:
+      app: pod
