@@ -19,7 +19,7 @@ public class PodController {
 
     @GetMapping(value = "/version")
     public String getVersion() {
-        return String.format("Hello from %s.v2\n", config.getName());
+        return String.format("Hello from %s.v1\n", config.getName());
     }
 
 }
