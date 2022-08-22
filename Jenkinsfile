@@ -2,10 +2,12 @@ node {
 
     def pod
 
+    def version = "v2"
+
     stage('notification') {
         withCredentials([string(credentialsId: 'botToken', variable: 'TOKEN'), string(credentialsId: 'chatId', variable: 'CHAT_ID')]) {
         sh  ("""
-            curl -s -X POST https://api.telegram.org/bot${TOKEN}/sendMessage -d chat_id=${CHAT_ID}} -d parse_mode=markdown -d text='*${env.JOB_NAME}* *Build* : START'
+            curl -s -X POST https://api.telegram.org/bot${TOKEN}/sendMessage -d chat_id=${CHAT_ID}} -d parse_mode=markdown -d text='*${env.JOB_NAME}* *Build* : START, VERSION : ${version}'
         """)
         }
     }
@@ -15,7 +17,7 @@ node {
     }
 
     stage('Build image') {
-        pod = docker.build("jarrettoswald/pod:v2")
+        pod = docker.build("jarrettoswald/pod:${version}")
     }
 
     stage('Push image') {
@@ -27,7 +29,7 @@ node {
     stage('notification') {
         withCredentials([string(credentialsId: 'botToken', variable: 'TOKEN'), string(credentialsId: 'chatId', variable: 'CHAT_ID')]) {
         sh  ("""
-            curl -s -X POST https://api.telegram.org/bot${TOKEN}/sendMessage -d chat_id=${CHAT_ID}} -d parse_mode=markdown -d text='*${env.JOB_NAME}* *Build* : OK'
+            curl -s -X POST https://api.telegram.org/bot${TOKEN}/sendMessage -d chat_id=${CHAT_ID}} -d parse_mode=markdown -d text='*${env.JOB_NAME}* *Build* : OK, VERSION : ${version}'
         """)
         }
     }
