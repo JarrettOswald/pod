@@ -15,7 +15,7 @@ node {
     }
 
     stage('Build image') {
-        pod = docker.build("jarrettoswald/pod:v1")
+        pod = docker.build("jarrettoswald/pod:v2")
     }
 
     stage('Push image') {
